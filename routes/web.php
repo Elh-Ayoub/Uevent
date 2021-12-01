@@ -36,7 +36,10 @@ Route::group([
     Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
     Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('auth/register', [AuthController::class, 'register'])->name('auth.register');
-
+});
+Route::group([
+    'middleware' => 'web',
+], function () {
     //  ---------Email verification----------
     Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
     ->middleware(['signed', 'throttle:6,1'])
