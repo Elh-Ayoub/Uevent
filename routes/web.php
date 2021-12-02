@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerifyEmailController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,21 +19,26 @@ use App\Http\Controllers\VerifyEmailController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-///////////////////// ---- Authentication Module ---- /////////////////////////////////
-Route::get('auth/login', function () {
-    return view('auth.login');
-})->name('login');
-Route::get('auth/register', function () {
-    return view('auth.register');
-})->name('register');
-
-Route::group([
-    'middleware' => 'AuthCheck',
-], function () {
     Route::get('/', function () {
         return view('welcome');
     });
+    Route::get('/home', function () {
+        return view('home');
+    })->name('dashboard');
+///////////////////// ---- Authentication Module ---- /////////////////////////////////
+
+Route::get('/home', function () {
+        return view('home');
+    })->name('dashboard');
+Route::group([
+    'middleware' => 'AuthCheck',
+], function () {
+    Route::get('auth/login', function(){
+        return view('Auth.login');
+    })->name('login');
+    Route::get('auth/register', function(){
+        return view('Auth.register');
+    })->name('register');
     Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
     Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('auth/register', [AuthController::class, 'register'])->name('auth.register');
@@ -55,12 +61,6 @@ Route::group([
         return redirect('auth/login')->with('success', 'Email already verified! Thank you.');
     });
     // -------password reset --------------
-    Route::get('auth/login', function(){
-        return view('Auth.login');
-    })->name('login');
-    Route::get('auth/register', function(){
-        return view('Auth.register');
-    })->name('register');
     Route::get('auth/forgot-password', function(){
         return view('Auth.forgot-password');
     })->name('password.forgot');

@@ -21,7 +21,7 @@ class AuthCheck
             return redirect('auth/login')->with('fail', 'You must be logged in first.');
         }
         if(Auth::user() && ($request->path() == 'auth/login' || $request->path() == 'auth/register')){
-            return redirect('/');
+            return redirect('/home')->with('fail', 'Already logged in!');
         }
         return $next($request);
     }
