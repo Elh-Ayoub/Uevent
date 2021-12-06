@@ -34,7 +34,7 @@
             </li>
             @if(Auth::user())
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('events.create')}}" class="nav-link">
                     <i class="fas fa-plus mr-1"></i>
                     <p>Create Event</p>
                 </a>

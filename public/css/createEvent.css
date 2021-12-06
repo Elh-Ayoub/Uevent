@@ -1,0 +1,48 @@
+.input-container {
+    position: relative;
+}
+
+.container__input:not(:placeholder-shown) + .container__label {
+    background: #fff;
+    transform: translate(0, -50%);
+    opacity: 1;
+}
+
+.container__label {
+    left: 8px;
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    transition: all 400ms;
+
+    color: #17a2b8;
+    font-size: large;
+}
+
+/* -------- */
+.sample_label{
+    color: #16899b;
+}
+.upload-container {
+    position: relative;
+    border: 2px solid #16899b9c;
+    padding: 2px 5px;
+    font-size: large;
+    border-radius: 20px;
+    color: #17a2b8;
+    cursor: pointer;
+}
+.radio-input:checked ~ label, .radio-input:checked ~ label{
+    color: #16899b63;
+}
+/* -------- */
+.publish_radio_label{
+    border: 1px solid grey;
+    padding: 10px;
+}
+.publish_radio:checked + label
+{ 
+    background-color: #16899b; 
+    /* border-radius: 10px; */
+    color: white;
+}

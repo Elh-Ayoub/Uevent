@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\VerifyEmailController;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +69,16 @@ Route::group([
     })->middleware('guest')->name('password.reset');
     Route::patch('auth/reset-password', [AuthController::class, 'resetPassword'])->middleware('guest')->name('password.update');
     Route::post('auth/forgot-password',[AuthController::class, 'sendResetLink'])->middleware('guest')->name('password.send');
+});
+
+///////////////////// ---- Events Module ---- /////////////////////////////////
+
+Route::group([
+    'middleware' => 'AuthCheck',
+], function () {
+    // Route::get('', function(){
+    //     return view('Events.create');
+    // });
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/events/create', [EventController::class, 'store'])->name('events.store');
 });
