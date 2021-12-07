@@ -10,7 +10,6 @@
     position: relative;
     display: block;
     background: #ffffff;
-    overflow: hidden;
     border-radius: 0.25rem;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
@@ -18,7 +17,7 @@
 .card-style2 .card-img img {
     transition: all 0.3s linear 0s;
 }
-.card-style2:hover .card-img img {
+.card-style2:hover{
     transform: scale(1.05);
 }
 .card-style2 .date {

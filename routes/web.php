@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\VerifyEmailController;
+use App\Models\Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ use App\Http\Controllers\VerifyEmailController;
 ///////////////////// ---- Authentication Module ---- /////////////////////////////////
 
 Route::get('/home', function () {
-        return view('home');
+        return view('home', ['events' => Event::where('published', 'yes')->get()]);
     })->name('dashboard');
 Route::group([
     'middleware' => 'AuthCheck',

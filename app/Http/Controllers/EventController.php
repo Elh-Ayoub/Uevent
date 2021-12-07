@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use File;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class EventController extends Controller
 {
@@ -77,8 +78,9 @@ class EventController extends Controller
         $image = $request->file('poster');
         if($image){
             $filename = uniqid().".".File::extension($image->getClientOriginalName());
-            $image = $request->file('poster')->store('public');
-            $image1 = $request->file('poster')->move(public_path('/event-posters'), $filename);
+            $image_resize = Image::make($image->getRealPath());              
+            $image_resize->resize(1080 , 1350);
+            $image_resize->save(public_path('/event-posters/' .$filename));
             return url('/event-posters/' . $filename);
         }
         return null;
