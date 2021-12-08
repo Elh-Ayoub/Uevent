@@ -23,14 +23,8 @@ use App\Models\Event;
     Route::get('/', function () {
         return view('welcome');
     });
-    Route::get('/home', function () {
-        return view('home');
-    })->name('dashboard');
+    Route::get('/home', [EventController::class, 'index'])->name('dashboard');
 ///////////////////// ---- Authentication Module ---- /////////////////////////////////
-
-Route::get('/home', function () {
-        return view('home', ['events' => Event::where('published', 'yes')->get()]);
-    })->name('dashboard');
 Route::group([
     'middleware' => 'AuthCheck',
 ], function () {
@@ -77,9 +71,8 @@ Route::group([
 Route::group([
     'middleware' => 'AuthCheck',
 ], function () {
-    // Route::get('', function(){
-    //     return view('Events.create');
-    // });
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('/events/create', [EventController::class, 'store'])->name('events.store');
+    Route::get('/events/{id}', [EventController::class, 'show'])->name('event.details');
+
 });

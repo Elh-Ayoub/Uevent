@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="form-group input-container mt-4">
                                     <input type="number" min="0" placeholder="Ticket price (UAH)" id="ticket_price" name="ticket_price" class="form-control container__input" required>
-                                    <label class="col-6 container__label">Ticket price (UAH)</label>
+                                    <label class="col-6 container__label">Ticket price (USD)</label>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="inputcan_see_visitors" class="col-12 sample_label">Who can see visitors list ? </label>
@@ -141,9 +141,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-4 flex-column">
-                                <div id="map"></div>
-                            </div> --}}
                         </div>
                         <div class="row justify-content-around bg-gray-light pt-2 pb-2 pr-0 pl-0 m-0 w-100">
                             <a type="button" href="/home"  class="btn btn-default mt-1 mb-1">Cancel</a>

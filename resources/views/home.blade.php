@@ -52,7 +52,7 @@
                                 <div class="card-body">
                                     <h3 class="h5"><a href="#!">{{$event->title}}</a></h3>
                                     <p class="display-30">{{$event->description}}</p>
-                                    <a href="#!" class="read-more">read more</a>
+                                    <a href="{{route('event.details', $event->id)}}" class="read-more">read more</a>
                                 </div>
                                 <div class="card-footer">
                                     <ul>

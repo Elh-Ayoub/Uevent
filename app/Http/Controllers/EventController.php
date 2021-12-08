@@ -19,7 +19,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return view('home', ['events' => Event::where('published', 'yes')->get()]);
     }
 
     /**
@@ -103,12 +103,16 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Event  $event
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show($id)
     {
-        //
+        $event = Event::find($id);
+        if(!$event){
+            return redirect('/home')->with('fail', 'Event not found!');
+        }
+        return view('Events.details', ['event' => $event]);
     }
 
     /**
