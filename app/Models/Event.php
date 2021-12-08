@@ -13,6 +13,7 @@ class Event extends Model
         'title',
         'description',
         'author',
+        'tickets_limited',
         'tickets_number',
         'ticket_price',
         'poster',

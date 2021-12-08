@@ -41,7 +41,7 @@
                 <form action="{{route('events.store')}}" class="card card-info h-100 position-relative" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-header">
-                        <h3 class="card-title">Create event</h3>
+                        <h3 class="card-title">Create event</h3><span class="small ml-2">(All fields are required)</span>
                         <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
@@ -54,7 +54,7 @@
                             <label class="container__label" for="title">Event title</label>
                         </div>
                         <div class="form-group input-container">
-                            <textarea id="description" name="description" placeholder="Description" class="form-control container__input" maxlength="300" required></textarea>
+                            <textarea id="description" name="description" placeholder="Description" class="form-control container__input" maxlength="500" required></textarea>
                             <label class="container__label" for="description">Description</label>
                         </div>
                         <div class="form-group input-container">
@@ -67,9 +67,22 @@
                                     <input type="file" id="poster" name="poster" class="d-none">
                                     <label for="poster" class="col-sm-8 d-flex justify-content-center align-items-center" style="cursor: pointer;"><i class="fas fa-upload mr-2"></i><span id="upload-container-label">Event Poster</span></label>
                                 </div>
-                                <div class="input-container mt-4">
-                                    <input type="number" min="1" placeholder="Tickets number" id="tickets_number" name="tickets_number" class="form-control container__input" required>
-                                    <label class="col-6 container__label">Tickets number</label>
+                                <div class="input-container mt-4 col-12 d-flex align-items-center">
+                                    <label class="col-4 sample_label">Tickets: </label>
+                                    <div class="d-flex justify-content-center align-items-center col-6">
+                                        <div>
+                                            <input type="radio" name="tickets_limited" id="limited" value="yes" class="publish_radio d-none">
+                                            <label class="publish_radio_label" for="limited">Limited</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" name="tickets_limited" id="unlimited" value="no" class="publish_radio d-none" checked>
+                                            <label class="publish_radio_label" for="unlimited">Unlimited</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group input-container mt-4" id="ticket_num_container" style="display: none">
+                                    <input type="number" min="1" placeholder="Tickets number" id="tickets_number" name="tickets_number" class="form-control container__input">
+                                    <label class="col-6 container__label" for="tickets_number">Tickets number</label>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="inputreceive_notif" class="col-12 sample_label">Receive notifications about new visitors ?</label>
@@ -82,7 +95,13 @@
                                         <label for="option_no">No</label>
                                     </div>
                                 </div>
-                                
+                                <div class="form-group mt-3">
+                                    <div class="d-flex align-items-center">
+                                        <label for="" class="col-4 sample_label">Promo code: </label>
+                                        <a class="btn btn-info btn-sm" id="add_promo_code">Add</a>
+                                    </div>
+                                    <div class="col-10 mt-2" id="promo_code_container"></div>
+                                </div>
                             </div>
                             <div class="col-md-5 flex-column">
                                 <div class="form-group d-flex align-items-center">
@@ -149,30 +168,7 @@
 <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('dist/js/demo.js')}}"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
-<script>
-    $("#poster").change(function(){
-        if($('#poster').val().length > 0){
-            $("#upload-container-label").html("File selected!")
-            $(".upload-container").css('background', 'rgba(2, 95, 95, 0.7)')
-            $(".upload-container").css('color', 'white')
-        }else{
-            $("#upload-container-label").html("Event Poster")
-            $(".upload-container").css('background', 'white')
-            $(".upload-container").css('color', 'rgba(2, 95, 95, 0.7)')
-        }
-    });
-    $("#publish_Scheduled").change(function(){
-        
-        if(this.checked){
-            $('#publish_at_container').fadeIn(1000)
-        }
-    });
-    $("#publish_now").change(function(){
-        if(this.checked){
-            $('#publish_at_container').fadeOut(1000);
-        }
-    });
-</script>
+<script src="{{ asset('js/create-event.js') }}"></script>
 @if(Session::get('fail'))
 <script>
   $(function() {

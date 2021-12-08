@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\PromoCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -41,7 +42,6 @@ class EventController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => ['required', 'string', 'max:100'],
-            'tickets_number' => ['required'],
             'ticket_price' => ['required'],
             'poster' => 'required|image|mimes:jpg,png|max:20000|dimensions:min_width=350,min_height=280',
             'location' =>['required'],
@@ -58,6 +58,7 @@ class EventController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'author' => Auth::id(),
+            'tickets_limited' => $request->tickets_limited,
             'tickets_number' => $request->tickets_number,
             'ticket_price' => $request->ticket_price,
             'poster' => $this->uploadImage($request),
@@ -68,6 +69,7 @@ class EventController extends Controller
             'location' => $request->location,
         ]);
         if($event){
+            $this->storePromoCode($request, $event->id);
             return redirect('events/create')->with('success', 'Event craeted successfully!');
         }else{
             return redirect('events/create')->with('fail', 'Something went wrong! Try again.');
@@ -84,6 +86,19 @@ class EventController extends Controller
             return url('/event-posters/' . $filename);
         }
         return null;
+    }
+
+    function storePromoCode($request, $id){
+        if(count($request->code) > 0){
+            for($i=0; $i < count($request->code); $i++){
+                PromoCode::create([
+                    'author' => Auth::id(),
+                    'code' => $request->code[$i],
+                    'percentage' => $request->percentage[$i],
+                    'event_id' => $id,
+                ]);
+            }
+        }
     }
     /**
      * Display the specified resource.

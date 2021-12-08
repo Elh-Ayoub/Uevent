@@ -18,13 +18,14 @@ class CreateEventsTable extends Migration
             $table->text('title');
             $table->text('description')->nullable();
             $table->integer('author');
-            $table->integer('tickets_number');
+            $table->enum('tickets_limited', ['yes', 'no']);
+            $table->integer('tickets_number')->nullable();
             $table->integer('ticket_price');
             $table->string('poster');
             $table->enum('receive_notif', ['yes', 'no'])->default('yes');
             $table->enum('published', ['yes', 'no']);
             $table->enum('can_see_visitors', ['Everyone', 'Event visitors', 'No body'])->default('Everyone');
-            $table->string('publish_at')->nullable();
+            $table->timestamp('publish_at')->nullable();
             $table->string('location');
             $table->timestamps();
         });
