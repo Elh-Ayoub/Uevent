@@ -40,12 +40,30 @@
             <div class="container">
                 <div class="row align-items-start">
                     <div class="col-lg-4 mb-2 p-0">
-                        <article class="card-style2">
+                        <article class="card-style2 mb-3">
                             <div class="card-img">
                                 <img class="w-100" src="{{$event->poster}}" alt="...">
-                                <div class="date"><span>{{($event->publish_at) ? date('d', strtotime($event->publish_at)) : (date('d', strtotime($event->created_at)))}}</span>{{($event->publish_at) ? date('M', strtotime($event->publish_at)) : (date('M', strtotime($event->created_at)))}}</div>
+                                <div class="date"><span>{{ date('d', strtotime($event->begins_at))}}</span>{{date('M', strtotime($event->begins_at))}}</div>
                             </div>
                         </article>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="mb-0 text-lg text-bold sample_label">Subscription</h6>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row justify-content-between align-items-center">
+                                    <div class="col-sm-12 mt-2">
+                                        <button class="btn btn-info"><i class="fas fa-plus-circle mr-2"></i>Subscribe to event</button>
+                                    </div>
+                                    <div class="col-sm-12 mt-2">
+                                        <button class="btn btn-secondary"><i class="far fa-flag mr-2"></i>Subscribe to notifications from author</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <div class="card mb-3">
@@ -56,8 +74,8 @@
                                 </div>
                                 </div>
                                 <hr>
-                                <img src="{{App\Models\User::find($event->id)->profile_photo}}" class="img-fluid img-circle" alt="User-Image" style="border: 1px solid grey;">
-                                <span class="ml-2 text-lg">{{App\Models\User::find($event->id)->username}}</span>
+                                <img src="{{App\Models\User::find($event->author)->profile_photo}}" class="img-fluid img-circle" alt="User-Image" style="border: 1px solid grey;">
+                                <span class="ml-2 text-lg">{{App\Models\User::find($event->author)->username}}</span>
                             </div>
                         </div>
                         <div class="card mb-3">
@@ -83,16 +101,27 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                      <h6 class="mb-0 text-info">Number of Tickets:  </h6>
+                                      <h6 class="mb-0 text-info">Begins at:  </h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
+                                        {{ date('D  d  M  Y H:i:s', strtotime($event->begins_at))}}
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                      <h6 class="mb-0 text-info">Number of Tickets:  </h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary row justify-content-around">
                                         @if($event->tickets_limited === 'yes')
-                                        {{$event->tickets_number}}
-                                        <span class="text-info">Available: </span>
-                                        {{$event->tickets_number}}
-                                        @else
-                                        Unlimited
-                                        @endif
+                                        <span class="col-6">{{$event->tickets_number}}</span>
+                                        <div class="col-6">
+                                          <span class="text-info">( Available: </span>
+                                            {{$event->tickets_number}} )
+                                            @else
+                                            Unlimited
+                                            @endif  
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -129,7 +158,7 @@
                                 </div>
                                 <hr>
                                 <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen
-                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDidlLcVi1QvFXiSpp3FgATAtoKiiwkqZ0&q=kharkiv+Ukraine"></iframe>
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDidlLcVi1QvFXiSpp3FgATAtoKiiwkqZ0&q={{str_replace(" ", "+", $event->location)}}"></iframe>
                             </div>
                         </div>
                     </div>

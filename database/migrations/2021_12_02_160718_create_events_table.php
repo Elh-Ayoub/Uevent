@@ -26,6 +26,7 @@ class CreateEventsTable extends Migration
             $table->enum('published', ['yes', 'no']);
             $table->enum('can_see_visitors', ['Everyone', 'Event visitors', 'No body'])->default('Everyone');
             $table->timestamp('publish_at')->nullable();
+            $table->timestamp('begins_at');
             $table->string('location');
             $table->timestamps();
         });

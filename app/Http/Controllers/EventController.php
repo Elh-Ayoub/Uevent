@@ -45,6 +45,7 @@ class EventController extends Controller
             'ticket_price' => ['required'],
             'poster' => 'required|image|mimes:jpg,png|max:20000|dimensions:min_width=350,min_height=280',
             'location' =>['required'],
+            'begins_at' => ['required'],
         ]);
         if($validator->fails()){
             return back()->with('fail-arr', json_decode($validator->errors()->toJson()));
@@ -65,11 +66,14 @@ class EventController extends Controller
             'receive_notif' => $request->receive_notif,
             'published' => $published,
             'can_see_visitors' => $request->can_see_visitors,
-            'publish_at' => ($request->publish_at) ? date('D M d Y H:i:s', strtotime($request->publish_at)) : (null),
+            'publish_at' => ($request->publish_at) ? date('Y-m-d H:i:s', strtotime($request->publish_at)) : (null),
+            'begins_at' => date('Y-m-d H:i:s', strtotime($request->begins_at)),
             'location' => $request->location,
         ]);
         if($event){
-            $this->storePromoCode($request, $event->id);
+            if($request->code){
+              $this->storePromoCode($request, $event->id);  
+            }
             return redirect('events/create')->with('success', 'Event craeted successfully!');
         }else{
             return redirect('events/create')->with('fail', 'Something went wrong! Try again.');

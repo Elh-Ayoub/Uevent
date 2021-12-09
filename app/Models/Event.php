@@ -20,6 +20,7 @@ class Event extends Model
         'receive_notif',
         'can_see_visitors',
         'publish_at',
+        'begins_at',
         'published',
         'location'
     ];

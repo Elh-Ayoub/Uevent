@@ -61,7 +61,11 @@
                             <input type="text" id="location" placeholder="Event Location" name="location" class="form-control container__input" required>
                             <label class="container__label" for="location">Event Location</label>
                         </div>
-                        <div class="row d-flex justify-content-lg-around align-items-center">
+                        <div class="form-group row align-items-center col-12 p-2 m-auto" style="border: 1px solid rgba(173, 172, 172, 0.5); border-radius: 3px;">
+                            <label for="begins_at" class="col-sm-3 text-muted">Event begins at: </label>
+                            <input type="datetime-local" name="begins_at" id="begins_at" class="form-control col-sm-4">
+                        </div>
+                        <div class="form-group col-12 row justify-content-lg-around align-items-center mx-auto py-3 mt-3" style="border: 1px solid rgba(173, 172, 172, 0.5); border-radius: 3px;">
                             <div class="col-md-5 flex-column">
                                 <div class="d-flex justify-content-center align-items-center upload-container mb-2">
                                     <input type="file" id="poster" name="poster" class="d-none">
@@ -118,7 +122,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group input-container mt-4" id="publish_at_container" style="display: none">
-                                    <label for="publish_at" class="col-sm-6 sample_label">Select date and time: </label>
+                                    <label for="publish_at" class="col-sm-8 sample_label">Select date and time to publish: </label>
                                     <input type="datetime-local" name="publish_at" id="publish_at" class="form-control">
                                 </div>
                                 <div class="form-group input-container mt-4">
