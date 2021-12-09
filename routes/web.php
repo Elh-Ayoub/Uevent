@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VerifyEmailController;
 use App\Models\Event;
 
@@ -76,3 +77,10 @@ Route::group([
 });
 
 Route::get('/events/{id}', [EventController::class, 'show'])->name('event.details');
+
+///////////////////// ---- Subscriptions/payment Module ---- /////////////////////////////////
+Route::group([
+    'middleware' => 'AuthCheck',
+], function () {
+    Route::get('/events/{id}/subscribe', [SubscriptionController::class, 'EventSubscriptionView'])->name('events.sub.view');
+});

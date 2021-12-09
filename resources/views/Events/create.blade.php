@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/createEvent.css') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo.png')}}"/>
-  {{-- <style> #map {height: 100%;}</style> --}}
 </head>
 <body class="hold-transition sidebar-collapse layout-top-nav">
 <div class="wrapper">
@@ -193,38 +192,5 @@
     </script>
     @endforeach
 @endif
-{{-- <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<script>
-    let map;
-
-    function initMap() {
-        const myLatlng = { lat: 29.68566266724448, lng: -9.73256252902347};
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 8,
-            center: myLatlng,
-        });
-        // Create the initial InfoWindow.
-        let infoWindow = new google.maps.InfoWindow({
-            content: "Click the map to get Lat/Lng!",
-            position: myLatlng,
-        });
-
-        infoWindow.open(map);
-        // Configure the click listener.
-        map.addListener("click", (mapsMouseEvent) => {
-            // Close the current InfoWindow.
-            infoWindow.close();
-            // Create a new InfoWindow.
-            infoWindow = new google.maps.InfoWindow({
-            position: mapsMouseEvent.latLng,
-            });
-            infoWindow.setContent(
-            JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-            );
-            infoWindow.open(map);
-        });
-    }
-</script> --}}
-{{-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDidlLcVi1QvFXiSpp3FgATAtoKiiwkqZ0&callback=initMap"></script> --}}
 </body>
 </html>

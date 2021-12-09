@@ -56,7 +56,7 @@
                                 <hr>
                                 <div class="row justify-content-between align-items-center">
                                     <div class="col-sm-12 mt-2">
-                                        <button class="btn btn-info"><i class="fas fa-plus-circle mr-2"></i>Subscribe to event</button>
+                                        <a href="{{route('events.sub.view', $event->id)}}" class="btn btn-info"><i class="fas fa-plus-circle mr-2"></i>Subscribe to event</a>
                                     </div>
                                     <div class="col-sm-12 mt-2">
                                         <button class="btn btn-secondary"><i class="far fa-flag mr-2"></i>Subscribe to notifications from author</button>

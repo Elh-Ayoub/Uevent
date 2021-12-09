@@ -47,7 +47,7 @@
                             <article class="card card-style2">
                                 <div class="card-img">
                                     <img class="w-100" src="{{$event->poster}}" alt="...">
-                                    <div class="date"><span>{{($event->publish_at) ? date('d', strtotime($event->publish_at)) : (date('d', strtotime($event->created_at)))}}</span>{{($event->publish_at) ? date('M', strtotime($event->publish_at)) : (date('M', strtotime($event->created_at)))}}</div>
+                                    <div class="date"><span>{{ date('d', strtotime($event->begins_at))}}</span>{{date('M', strtotime($event->begins_at))}}</div>
                                 </div>
                                 <div class="card-body">
                                     <h3 class="h5"><a href="#!">{{$event->title}}</a></h3>
