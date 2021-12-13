@@ -112,16 +112,16 @@
                                     <div class="col-sm-3">
                                       <h6 class="mb-0 text-info">Number of Tickets:  </h6>
                                     </div>
-                                    <div class="col-sm-9 text-secondary row justify-content-around">
+                                    <div class="col-sm-9 text-secondary @if($event->tickets_limited === 'yes') row justify-content-around @endif">
                                         @if($event->tickets_limited === 'yes')
                                         <span class="col-6">{{$event->tickets_number}}</span>
                                         <div class="col-6">
                                           <span class="text-info">( Available: </span>
                                             {{$event->tickets_number}} )
-                                            @else
-                                            Unlimited
-                                            @endif  
                                         </div>
+                                        @else
+                                            Unlimited
+                                        @endif
                                     </div>
                                 </div>
                                 <hr>

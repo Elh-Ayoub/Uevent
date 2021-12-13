@@ -54,10 +54,14 @@
                                 <div class="form-group col-4 mt-2 mb-0">
                                     <label for="quantity">Total price:</label>
                                 </div>
-                                <div class="bg-gray py-2 px-3">
+                                <div class="bg-info py-2 px-3" style="border-radius: 10px;">
+                                    @if($event->ticket_price == 0)
+                                        <span id="price">Free</span>
+                                    @else
                                     <h2 class="mb-0">
-                                    <span id="price">{{$event->ticket_price}}</span> $ (USD)
+                                        <span id="price">{{$event->ticket_price}}</span> $ (USD)
                                     </h2>
+                                    @endif
                                 </div>
                                 <div class="form-group col-8 mt-3">
                                     <label for="promo_code">Add promo code:</label>
@@ -67,11 +71,16 @@
                                     </div>
                                 </div>
                                 <p id="promo_code_label" class="form-group col-8 sample_label"></p>
+                                @csrf
                                 <div class="mt-4">
-                                    <button id="pay" class="btn btn-primary btn-lg btn-flat">
+                                    @if($event->ticket_price == 0)
+                                        <button class="btn btn-info btn-lg btn-fla" onclick="subscribe()"><i class="fas fa-plus-circle mr-2"></i>Free subscription</button>
+                                    @else
+                                    <button id="pay" class="btn btn-primary btn-lg btn-flat" data-id="{{$event->id}}">
                                     <i class="fas fa-cart-plus fa-lg mr-2"></i>
                                     Continue to payment
                                     </button>
+                                    @endif
                                 </div>
                                 <div class="mt-4 product-share">
                                     <a href="#" class="text-gray">
@@ -100,7 +109,8 @@
                         </button>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <form class="card-body stripe-payment" action="{{route('events.subscribe', $event->id)}}" role="form" method="POST" action="#" data-cc-on-file="false" id="stripe-payment" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}">
+                        @csrf
                         <div class="panel-body col-8">
                             <div class='form-row row col-12'>
                                 <div class='col-10 form-group required'>
@@ -139,7 +149,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
@@ -155,8 +165,12 @@
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script src="{{ asset('js/stripe.js') }}"></script>
+
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('js/subscription.js') }}"></script>
+
 @if(Session::get('fail'))
 <script>
   $(function() {
