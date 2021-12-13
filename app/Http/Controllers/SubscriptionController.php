@@ -80,6 +80,21 @@ class SubscriptionController extends Controller
         }
     }
 
+    public function update(Request $request, $id){
+        $validator = Validator::make($request->all(),[
+            'show_name' => 'required',
+        ]);
+        if($validator->fails()){
+            return back()->with('fail-arr', json_decode($validator->errors()->toJson()));
+        }
+        $sub = Subscribe::find($id);
+        if(!$sub){
+            ['fail' => 'Subscribe not found!'];
+        }
+        $sub->update(['show_name' => $request->show_name]);
+        return ['success' => 'updated successfully!'];
+    }
+
     public function store($id){
         $subscribe = Subscribe::create([
             'author' => Auth::id(),

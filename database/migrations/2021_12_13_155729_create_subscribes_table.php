@@ -18,6 +18,7 @@ class CreateSubscribesTable extends Migration
             $table->integer('author');
             $table->integer('event_id')->nullable();
             $table->integer('notification_id')->nullable();
+            $table->enum('show_name', ['yes', 'no'])->default('yes');
             $table->timestamps();
         });
     }

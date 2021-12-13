@@ -13,6 +13,6 @@ class Subscribe extends Model
         'author',
         'event_id',
         'notification_id',
-        
+        'show_name',
     ];
 }

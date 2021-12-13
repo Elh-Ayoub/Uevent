@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('events/{id}/promocode/', [SubscriptionController::class, 'fetshPromoCode'])->name('check.promo');
+Route::patch('/subscribe/{id}/', [SubscriptionController::class, 'update'])->name('events.subscribe.update');

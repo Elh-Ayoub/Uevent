@@ -74,13 +74,40 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 row justify-content-around align-items-center">
+                                        <h6 class="mb-0 text-lg text-bold sample_label">Visitors</h6>
+                                        @if($subscribe)
+                                        <select name="show_name" id="show_name" class="col-6 form-control" data-url="{{ route('events.subscribe.update', $subscribe->id) }}">
+                                            <option value="yes" @if($subscribe->show_name == 'yes') selected @endif> Show my name in list</option>
+                                            <option value="no" @if($subscribe->show_name == 'no') selected @endif>Don't show my name in list</option>
+                                        </select>
+                                        @endif
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-12">
+                                    @foreach ($event_subs as $sub)
+                                        @if($sub->show_name == 'yes')
+                                            <div class="col-md-8 row justify-content-lg-start">
+                                                <img src="{{App\Models\User::find($sub->author)->profile_photo}}" class="img-fluid img-circle img-sm" alt="User-Image" style="border: 1px solid grey;">
+                                                <span class="ml-2 text-lg">{{App\Models\User::find($sub->author)->username}}</span>
+                                            </div>
+                                            <hr>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="row">
                                 <div class="col-12">
-                                    <h6 class="mb-0 text-lg text-bold sample_label">Author</h6>
+                                    <h6 class="mb-0 text-lg text-bold sample_label">Author / Organizer</h6>
                                 </div>
                                 </div>
                                 <hr>
@@ -187,6 +214,7 @@
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('js/update-sub.js') }}"></script>
 @if(Session::get('fail'))
 <script>
   $(function() {
