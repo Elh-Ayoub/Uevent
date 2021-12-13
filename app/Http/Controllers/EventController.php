@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\PromoCode;
+use App\Models\Subscribe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -116,7 +117,9 @@ class EventController extends Controller
         if(!$event){
             return redirect('/home')->with('fail', 'Event not found!');
         }
-        return view('Events.details', ['event' => $event]);
+        return view('Events.details', ['event' => $event, 
+        'subscribe' => Subscribe::where(['author' => Auth::id(), 'event_id' => $id])->first(),
+         'event_subs' => Subscribe::where('event_id', $id)->get()]);
     }
 
     /**

@@ -55,9 +55,19 @@
                                 </div>
                                 <hr>
                                 <div class="row justify-content-between align-items-center">
+                                    @if($subscribe)
+                                        <div class="col-sm-12 mt-2">
+                                            <a href="#" class="btn btn-outline-success disabled"><i class="fas fa-check mr-2"></i>Subscribed</a>
+                                        </div>
+                                    @elseif($event->tickets_number - count($event_subs) == 0)
+                                    <div class="col-sm-12 mt-2">
+                                        <a href="#" class="btn btn-outline-secondary disabled"><i class="fas fa-times mr-2"></i>Unavailable tickets</a>
+                                    </div>
+                                    @else
                                     <div class="col-sm-12 mt-2">
                                         <a href="{{route('events.sub.view', $event->id)}}" class="btn btn-info"><i class="fas fa-plus-circle mr-2"></i>Subscribe to event</a>
                                     </div>
+                                    @endif
                                     <div class="col-sm-12 mt-2">
                                         <button class="btn btn-secondary"><i class="far fa-flag mr-2"></i>Subscribe to notifications from author</button>
                                     </div>
@@ -117,7 +127,7 @@
                                         <span class="col-6">{{$event->tickets_number}}</span>
                                         <div class="col-6">
                                           <span class="text-info">( Available: </span>
-                                            {{$event->tickets_number}} )
+                                            {{$event->tickets_number - count($event_subs)}} )
                                         </div>
                                         @else
                                             Unlimited

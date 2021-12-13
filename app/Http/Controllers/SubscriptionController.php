@@ -70,13 +70,13 @@ class SubscriptionController extends Controller
             ]);
             if($payment){
                 $this->store($id);
-                return back()->with('success', 'Subscribed successfully!');
+                return redirect()->route('event.details', $event->id)->with('success', 'Subscribed successfully!');
             }else{
                 return back()->with('fail', 'Somrthing went wrong!');
             }
         }else{
             $this->store($id);
-            return back()->with('success', 'Subscribed successfully!');
+            return redirect()->route('event.details', $event->id)->with('success', 'Subscribed successfully!');
         }
     }
 

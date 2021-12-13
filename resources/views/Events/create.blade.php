@@ -125,7 +125,7 @@
                                     <input type="datetime-local" name="publish_at" id="publish_at" class="form-control">
                                 </div>
                                 <div class="form-group input-container mt-4">
-                                    <input type="number" min="0" placeholder="Ticket price (UAH)" id="ticket_price" name="ticket_price" class="form-control container__input" required>
+                                    <input type="number" min="0" placeholder="Ticket price (USD)" id="ticket_price" name="ticket_price" class="form-control container__input" required>
                                     <label class="col-6 container__label">Ticket price (USD)</label>
                                 </div>
                                 <div class="form-group mt-3">
