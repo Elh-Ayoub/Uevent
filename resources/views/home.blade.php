@@ -57,7 +57,7 @@
                                 <div class="card-footer">
                                     <ul>
                                         <li><a href="#!"><i class="fas fa-user"></i>{{App\Models\User::find($event->author)->username}}</a></li>
-                                        <li><a href="#!"><i class="far fa-comment-dots"></i><span>11</span></a></li>
+                                        <li><a href="#!"><i class="far fa-comment-dots"></i><span>{{count(App\Models\Comment::where('event_id', $event->id)->get())}}</span></a></li>
                                     </ul>
                                 </div>
                             </article>

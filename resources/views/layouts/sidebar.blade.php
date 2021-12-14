@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-info elevation-4">
     <a href="{{route('dashboard')}}" class="brand-link">
         <img src="{{asset('images/logo.png')}}" alt="Logo" class="brand-image img-size-50">
         <span class="brand-text font-weight-light">{{env('APP_NAME')}}</span>
@@ -27,14 +27,14 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item">
-                <a href="{{route('dashboard')}}" class="nav-link">
+                <a href="{{route('dashboard')}}" class="nav-link @if(Request::url() === route('dashboard')) active @endif">
                     <i class="fa fa-home mr-1"></i>
                     <p>Home</p>
                 </a>
             </li>
             @if(Auth::user())
             <li class="nav-item">
-                <a href="{{route('events.create')}}" class="nav-link">
+                <a href="{{route('events.create')}}" class="nav-link @if(Request::url() === route('events.create')) active @endif">
                     <i class="fas fa-plus mr-1"></i>
                     <p>Create Event</p>
                 </a>

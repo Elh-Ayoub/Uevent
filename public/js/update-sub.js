@@ -8,4 +8,6 @@ $("#show_name").change(function(){
         location.reload();
     });
 })
+//comments
+$(".blog-comment").animate({ scrollTop: $('.blog-comment').prop("scrollHeight")}, 3000);
     

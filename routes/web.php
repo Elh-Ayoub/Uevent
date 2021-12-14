@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VerifyEmailController;
@@ -85,4 +86,13 @@ Route::group([
     Route::get('/events/{id}/subscribe', [SubscriptionController::class, 'EventSubscriptionView'])->name('events.sub.view');
     Route::post('/events/{id}/subscribe', [SubscriptionController::class, 'paySubscription'])->name('events.subscribe');
     Route::post('/events/{id}/free-subscribe', [SubscriptionController::class, 'freeSub'])->name('events.free.subscribe');
+});
+
+///////////////////// ---- Comments Module ---- /////////////////////////////////
+Route::group([
+    'middleware' => 'AuthCheck',
+], function () {
+    Route::post('/events/{id}/comment', [CommentController::class, 'store'])->name('events.comment');
+    Route::patch('/comment/{id}/', [CommentController::class, 'update'])->name('events.comment.update');
+    Route::delete('/comment/{id}/', [CommentController::class, 'destroy'])->name('events.comment.delete');
 });

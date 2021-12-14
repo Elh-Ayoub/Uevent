@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/home.css') }}">
   <link rel="stylesheet" href="{{ asset('css/createEvent.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/comments.css') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo.png')}}"/>
 </head>
 <body class="hold-transition sidebar-collapse layout-top-nav">
@@ -59,7 +60,7 @@
                                         <div class="col-sm-12 mt-2">
                                             <a href="#" class="btn btn-outline-success disabled"><i class="fas fa-check mr-2"></i>Subscribed</a>
                                         </div>
-                                    @elseif($event->tickets_number - count($event_subs) == 0)
+                                    @elseif(($event->tickets_number) && ($event->tickets_number - count($event_subs) == 0))
                                     <div class="col-sm-12 mt-2">
                                         <a href="#" class="btn btn-outline-secondary disabled"><i class="fas fa-times mr-2"></i>Unavailable tickets</a>
                                     </div>
@@ -74,6 +75,7 @@
                                 </div>
                             </div>
                         </div>
+                        @if(($event->can_see_visitors == 'Everyone') || (($event->can_see_visitors == 'Event visitors') && ($subscribe)))
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -101,6 +103,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                     <div class="col-md-8">
                         <div class="card mb-3">
@@ -196,6 +199,93 @@
                                 <hr>
                                 <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen
                                 src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDidlLcVi1QvFXiSpp3FgATAtoKiiwkqZ0&q={{str_replace(" ", "+", $event->location)}}"></iframe>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="mb-0 text-lg text-bold sample_label">Comments ({{count($comments)}})</h6>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="blog-comment col-12">
+                                    @foreach ($comments as $comment)
+                                    <ul class="row comments w-100">
+                                        <li class="row col-12">
+                                            <div class="event-comments col-12">
+                                                <img src="{{\App\Models\User::find($comment->author)->profile_photo}}" class="img-circle img-md" alt="avatar">
+                                                <p class="meta">{{$comment->created_at}} <a href="#" class="mx-1">{{\App\Models\User::find($comment->author)->username}}</a> says :
+                                                    @if($comment->author === Auth::id()) 
+                                                    <i class="float-right">
+                                                        <a href="#" class="link-muted" data-toggle="modal" data-target="#modal-editComment-{{$comment->id}}">Edit</a>
+                                                        <a href="#" class="link-muted ml-2" data-toggle="modal" data-target="#modal-deleteComment-{{$comment->id}}">Delete</a>
+                                                    </i>
+                                                    @endif
+                                                </p>
+                                                <p>
+                                                    {{$comment->content}}
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    {{-- edit comment modal --}}
+                                    <div class="modal fade" id="modal-editComment-{{$comment->id}}">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content bg-warning">
+                                            <div class="modal-header">
+                                              <h4 class="modal-title">Edit a comment</h4>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <form action="{{route('events.comment.update', $comment->id)}}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <textarea type="text" name="content" class="form-control bg-gradient-warning">{{$comment->content}}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-outline-light">Save</button>
+                                                </div>
+                                            </form>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    {{-- delete comment modal --}}
+                                    <div class="modal fade" id="modal-deleteComment-{{$comment->id}}">
+                                        <div class="modal-dialog">
+                                          <div class="modal-content bg-danger">
+                                            <div class="modal-header">
+                                              <h4 class="modal-title">Confirmation</h4>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                              <p>You are about to delete a comment. Are you sure? </p>
+                                            </div>
+                                            <form action="{{route('events.comment.delete', $comment->id)}}" method="POST">
+                                              @csrf
+                                              @method('DELETE')
+                                              <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-outline-light">Delete</button>
+                                              </div>
+                                            </form>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                                <form action="{{route('events.comment', $event->id)}}" method="POST" class="form-group col-12 row">
+                                    @csrf
+                                    <input type="text" class="form-control col-10" name="comment" maxlength="500" placeholder="Type a comment ..." style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                    <button class="btn btn-outline-info text-center" style="border-top-left-radius: 0; border-bottom-left-radius: 0;"><i class="fas fa-paper-plane"></i></button>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Event;
 use App\Models\PromoCode;
 use App\Models\Subscribe;
@@ -117,9 +118,12 @@ class EventController extends Controller
         if(!$event){
             return redirect('/home')->with('fail', 'Event not found!');
         }
-        return view('Events.details', ['event' => $event, 
-        'subscribe' => Subscribe::where(['author' => Auth::id(), 'event_id' => $id])->first(),
-         'event_subs' => Subscribe::where('event_id', $id)->get()]);
+        return view('Events.details', [
+            'event' => $event, 
+            'subscribe' => Subscribe::where(['author' => Auth::id(), 'event_id' => $id])->first(),
+            'event_subs' => Subscribe::where('event_id', $id)->get(),
+            'comments' => Comment::where('event_id', $id)->get(),
+        ]);
     }
 
     /**
