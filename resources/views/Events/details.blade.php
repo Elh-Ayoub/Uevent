@@ -104,6 +104,30 @@
                             </div>
                         </div>
                         @endif
+                        {{-- similar events --}}
+                        @if(count($similar_events) > 1)
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 row justify-content-around align-items-center">
+                                        <h6 class="mb-0 text-lg text-bold sample_label">Similar events</h6>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col-12">
+                                    @foreach ($similar_events as $se)
+                                        @if ($se->id != $event->id)
+                                        <div class="col-md-8 row align-items-center">
+                                            <img src="{{$se->poster}}" class="img-fluid img-md" alt="User-Image">
+                                            <span class="ml-2 text-lg"><a class="link-info text-info" href="{{route('event.details', $se->id)}}">{{$se->title}}</a></span>
+                                        </div>
+                                        <hr>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <div class="col-md-8">
                         <div class="card mb-3">

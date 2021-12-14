@@ -121,11 +121,13 @@ class EventController extends Controller
         if(!$event){
             return redirect('/home')->with('fail', 'Event not found!');
         }
+        (count(Event::all()) >= 4) ? ($rand = 4) : ($rand = count(Event::all()));
         return view('Events.details', [
             'event' => $event, 
             'subscribe' => Subscribe::where(['author' => Auth::id(), 'event_id' => $id])->first(),
             'event_subs' => Subscribe::where('event_id', $id)->get(),
             'comments' => Comment::where('event_id', $id)->get(),
+            'similar_events' => Event::where('category', $event->category)->get()->random($rand),
         ]);
     }
 
