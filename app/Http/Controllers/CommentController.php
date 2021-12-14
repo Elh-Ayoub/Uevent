@@ -34,7 +34,7 @@ class CommentController extends Controller
             'event_id' => $id,
         ]);
         if($comment){
-            return back()->with('success', 'Commented in post successfully!');
+            return back()->with('success', 'Commented in event successfully!');
         }else{
             return back()->with('fail', 'Something went wrong!');
         }

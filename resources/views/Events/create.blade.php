@@ -64,6 +64,14 @@
                             <label for="begins_at" class="col-sm-3 text-muted">Event begins at: </label>
                             <input type="datetime-local" name="begins_at" id="begins_at" class="form-control col-sm-4">
                         </div>
+                        <div class="form-group col-12 p-0 mt-3">
+                            <select name="category" id="" class="form-control container__input col-12">
+                                <option selected disabled>Select event category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{$category->id}}">{{$category->title}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="form-group col-12 row justify-content-lg-around align-items-center mx-auto py-3 mt-3" style="border: 1px solid rgba(173, 172, 172, 0.5); border-radius: 3px;">
                             <div class="col-md-5 flex-column">
                                 <div class="d-flex justify-content-center align-items-center upload-container mb-2">

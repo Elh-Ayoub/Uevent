@@ -21,6 +21,7 @@ class CreateEventsTable extends Migration
             $table->enum('tickets_limited', ['yes', 'no']);
             $table->integer('tickets_number')->nullable();
             $table->integer('ticket_price');
+            $table->integer('category');
             $table->string('poster');
             $table->enum('receive_notif', ['yes', 'no'])->default('yes');
             $table->enum('published', ['yes', 'no']);

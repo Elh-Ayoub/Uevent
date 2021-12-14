@@ -22,7 +22,8 @@ class Event extends Model
         'publish_at',
         'begins_at',
         'published',
-        'location'
+        'location',
+        'category',
     ];
 
 }

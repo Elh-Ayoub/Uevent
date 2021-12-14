@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Event;
 use App\Models\PromoCode;
@@ -31,7 +32,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('Events.create');
+        return view('Events.create', ['categories' => Category::all()]);
     }
 
     /**
@@ -48,6 +49,7 @@ class EventController extends Controller
             'poster' => 'required|image|mimes:jpg,png|max:20000|dimensions:min_width=350,min_height=280',
             'location' =>['required'],
             'begins_at' => ['required'],
+            'category' => ['required'],
         ]);
         if($validator->fails()){
             return back()->with('fail-arr', json_decode($validator->errors()->toJson()));
@@ -71,6 +73,7 @@ class EventController extends Controller
             'publish_at' => ($request->publish_at) ? date('Y-m-d H:i:s', strtotime($request->publish_at)) : (null),
             'begins_at' => date('Y-m-d H:i:s', strtotime($request->begins_at)),
             'location' => $request->location,
+            'category' => $request->category,
         ]);
         if($event){
             if($request->code){

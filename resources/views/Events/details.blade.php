@@ -178,6 +178,15 @@
                                     </div>
                                 </div>
                                 <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                      <h6 class="mb-0 text-info">Category: </h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        {{App\Models\Category::find($event->category)->title}} 
+                                    </div>
+                                </div>
+                                <hr>
                             </div>
                         </div>
                         <div class="card mb-3">
