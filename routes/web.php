@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerifyEmailController;
 use App\Models\Event;
 
@@ -95,4 +96,7 @@ Route::group([
     Route::post('/events/{id}/comment', [CommentController::class, 'store'])->name('events.comment');
     Route::patch('/comment/{id}/', [CommentController::class, 'update'])->name('events.comment.update');
     Route::delete('/comment/{id}/', [CommentController::class, 'destroy'])->name('events.comment.delete');
+
+///////////////////// ---- user account Module ---- /////////////////////////////////
+    Route::get('/users/account/', [UserController::class, 'index'])->name('user.account');
 });

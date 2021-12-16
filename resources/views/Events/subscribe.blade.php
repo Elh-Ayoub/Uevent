@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <h3 class="my-3">{{$event->title}}</h3>
+                                <h3 class="my-3" id="title" data-id="{{$event->id}}">{{$event->title}}</h3>
                                 <p>{{$event->description}}</p>
                                 <hr>
                                 <div class="form-group col-4 mt-2 mb-0">
@@ -63,6 +63,7 @@
                                     </h2>
                                     @endif
                                 </div>
+                                @if($event->ticket_price > 0)
                                 <div class="form-group col-8 mt-3">
                                     <label for="promo_code">Add promo code:</label>
                                     <div class="d-flex align-items-center promo_code_container">
@@ -70,13 +71,14 @@
                                         <button class="btn btn-info" data-url="{{route('check.promo', $event->id)}}" id="check_promo_code">Apply</button> 
                                     </div>
                                 </div>
+                                @endif
                                 <p id="promo_code_label" class="form-group col-8 sample_label"></p>
                                 @csrf
                                 <div class="mt-4">
                                     @if($event->ticket_price == 0)
                                         <button class="btn btn-info btn-lg btn-fla" onclick="subscribe()"><i class="fas fa-plus-circle mr-2"></i>Free subscription</button>
                                     @else
-                                    <button id="pay" class="btn btn-primary btn-lg btn-flat" data-id="{{$event->id}}">
+                                    <button id="pay" class="btn btn-primary btn-lg btn-flat">
                                     <i class="fas fa-cart-plus fa-lg mr-2"></i>
                                     Continue to payment
                                     </button>

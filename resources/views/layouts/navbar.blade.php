@@ -44,7 +44,7 @@
             @if(Auth::user())
             <li class="nav-item user-panel d-flex">
                 <div class="mb-1">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('user.account')}}" class="nav-link">
                         <div class="image pr-2">
                             <img src="{{Auth::user()->profile_photo}}" class="img-fluid img-circle" alt="User-Image" style="border: 1px solid grey;">
                         </div>{{Auth::user()->username}}

@@ -50,7 +50,7 @@
                                     <div class="date"><span>{{ date('d', strtotime($event->begins_at))}}</span>{{date('M', strtotime($event->begins_at))}}</div>
                                 </div>
                                 <div class="card-body">
-                                    <h3 class="h5"><a href="#!">{{$event->title}}</a></h3>
+                                    <h3 class="h5"><a href="{{route('event.details', $event->id)}}">{{$event->title}}</a></h3>
                                     <p class="display-30">{{$event->description}}</p>
                                     <a href="{{route('event.details', $event->id)}}" class="read-more">read more</a>
                                 </div>
@@ -68,6 +68,7 @@
         </section>
         @include('layouts.footer')
     </div>
+</div>
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
@@ -76,11 +77,6 @@
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset('plugins/moment/moment.min.js')}}"></script>
-<script src="{{asset('dist/js/demo.js')}}"></script>
-<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
-<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 @if(Session::get('fail'))
 <script>

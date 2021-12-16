@@ -1,4 +1,4 @@
-var id = $("#pay").data('id');
+var id = $("#title").data('id');
 $("#check_promo_code").click(function(){
     if($('#promo_code').val()){
         var url = $(this).data('url');
@@ -60,6 +60,7 @@ function subscribe(){
             toastr.error(msg.fail)
         }else{
             toastr.success(msg.success)
+            location.reload();
         }
     })
 }
