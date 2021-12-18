@@ -36,7 +36,7 @@
                 
                             <div class="profile-header-info">
                                 <h4 class="m-t-sm">{{Auth::user()->username}}</h4>
-                                <p class="m-b-sm">{{Auth::user()->full_name}}r</p>
+                                <p class="m-b-sm">{{Auth::user()->full_name}}</p>
                                 <a href="#" class="btn btn-xs btn-primary mb-2">Edit Profile</a>
                             </div>
                         </div>
@@ -89,6 +89,8 @@
 <script src="{{ asset('plugins/uplot/uPlot.iife.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
+<script src="{{ asset('plugins/flot/jquery.flot.js') }}"></script>
+<script src="{{ asset('plugins/flot/plugins/jquery.flot.pie.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('js/panel.js') }}"></script>
 @if(Session::get('fail'))
