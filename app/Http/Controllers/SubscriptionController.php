@@ -19,7 +19,7 @@ class SubscriptionController extends Controller
             return back()->with('fail', 'event not found!');
         }
         if(Subscribe::where(['author' => Auth::id(), 'event_id' => $id])->first()){
-            return redirect()->route('event.details', $id)->with('fail', 'Already subscribed!');
+            return redirect()->route('event.details', $id)->with('success', 'Subscribed successfully!');
         }
         return view('Events.subscribe', ['event' => $event]);
     }

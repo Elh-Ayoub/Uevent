@@ -5,6 +5,8 @@
 /public/plugins
 /public/storage
 /public/pdfs
+/public/profile-pictures
+/public/public
 /storage/*.key
 /vendor
 .env

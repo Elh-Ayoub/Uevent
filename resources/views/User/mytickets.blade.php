@@ -3,9 +3,12 @@
     @foreach ($my_tickets as $ticket)
         @php
             $event = App\Models\Event::find($ticket->event_id);
+            if (!$event) {
+                continue;
+            }
             $strtime = strtotime($event->begins_at);
         @endphp
-            <article class="card col-sm-5 mx-2">
+            <article class="card card-ticket  col-sm-5 mx-2">
                 <section class="date px-3">
                     <time>
                         <span>{{date('d', $strtime)}}</span><span>{{date('M', $strtime)}}</span>
@@ -37,7 +40,7 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body row justify-content-center">
-                            <article class="card col-11 mx-2">
+                            <article class="card card-ticket  col-11 mx-2">
                                 <section class="date px-3">
                                     <time>
                                         <span>{{date('d', $strtime)}}</span><span>{{date('M', $strtime)}}</span>

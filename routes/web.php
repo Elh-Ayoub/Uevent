@@ -99,4 +99,9 @@ Route::group([
 
 ///////////////////// ---- user account Module ---- /////////////////////////////////
     Route::get('/users/account/', [UserController::class, 'index'])->name('user.account');
+    Route::patch('profile/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::patch('password/update/', [UserController::class, 'UpdatePassword'])->name('user.password.update');
+    Route::patch('avatar/update', [UserController::class, 'UpdateAvatar'])->name('user.avatar.update');
+    Route::delete('avatar/delete', [UserController::class, 'setDefaultAvatar'])->name('user.avatar.delete');    
+    Route::delete('user/delete', [UserController::class, 'destroyAuthUser'])->name('user.delete');
 });

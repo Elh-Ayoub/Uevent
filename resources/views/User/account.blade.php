@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/account.css')}}">
   <link rel="stylesheet" href="{{asset('css/ticket.css')}}">
+  <style>.selectfile{border: 1px #2d3748 solid; border-radius: 10px; padding: 5px 10px; margin: auto 10px; cursor: pointer; color: #2d3748;}</style>
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo.png')}}"/>
 </head>
 <body class="hold-transition sidebar-collapse layout-top-nav">
@@ -27,7 +28,7 @@
         
         <section class="content">
             <div class="container">
-                <div id="content" class="content p-0">
+                <div id="content" class="p-0">
                     <div class="profile-header">
                         <div class="profile-header-cover"></div>
                         <div class="profile-header-content">
@@ -38,7 +39,6 @@
                             <div class="profile-header-info">
                                 <h4 class="m-t-sm">{{Auth::user()->username}}</h4>
                                 <p class="m-b-sm">{{Auth::user()->full_name}}</p>
-                                <a href="#" class="btn btn-xs btn-primary mb-2">Edit Profile</a>
                             </div>
                         </div>
                 
@@ -68,7 +68,7 @@
                                         @include('User.mytickets')
                                     </div>
                                     <div class="tab-pane fade" id="account-profile">
-                                        
+                                        @include('User.profile')
                                     </div>
                                 </div>
                             </div>
@@ -94,6 +94,23 @@
 <script src="{{ asset('plugins/flot/plugins/jquery.flot.pie.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('js/panel.js') }}"></script>
+<script>
+    function readImage(input) {
+      if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#profile-pic').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#choosefile").change(function(){
+        readImage(this);
+    });
+    $('#SubmitInfoForm').click(function(){
+        $('#infoForm').submit();
+    })
+</script>
 @if(Session::get('fail'))
 <script>
   $(function() {
