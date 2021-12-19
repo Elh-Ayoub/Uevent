@@ -16,6 +16,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/account.css')}}">
+  <link rel="stylesheet" href="{{asset('css/ticket.css')}}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo.png')}}"/>
 </head>
 <body class="hold-transition sidebar-collapse layout-top-nav">
@@ -64,7 +65,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="account-tickets">
                                         {{-- include users tickets view --}}
-                                        {{-- @include('User.mytickets') --}}
+                                        @include('User.mytickets')
                                     </div>
                                     <div class="tab-pane fade" id="account-profile">
                                         
@@ -74,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
         </section>
         @include('layouts.footer')
     </div>

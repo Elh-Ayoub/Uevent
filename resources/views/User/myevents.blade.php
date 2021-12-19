@@ -1,3 +1,8 @@
+@if(count($my_events) == 0)
+        <h3 class="text-info"><i class="fas fa-exclamation-triangle mr-2"></i>No events created yet</h3>
+        <p><a href="{{route('events.create')}}" class="link-muted"><i class="fas fa-plus mr-1"></i>Create event</a></p>
+@else
+<h3 class="text-info">My events</h3>
 <ul class="event-list clearfix">
     @foreach ($my_events as $event)
         <li>
@@ -16,3 +21,4 @@
         </li>
     @endforeach
 </ul>
+@endif

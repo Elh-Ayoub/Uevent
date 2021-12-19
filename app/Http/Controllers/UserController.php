@@ -20,6 +20,7 @@ class UserController extends Controller
         $myevents = Event::where('author', Auth::id())->get();
         return view('User.account', [
             'my_events' => $myevents,
+            'my_tickets' => Subscribe::where('author', Auth::id())->get(),
             'today_subs' => $this->todaySubsInfo(),
             'week_subs' => $this->weekSubsInfo(),
             'year_subs' => $this->yearSubsInfo(),

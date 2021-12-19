@@ -4,6 +4,7 @@
 /public/event-posters
 /public/plugins
 /public/storage
+/public/pdfs
 /storage/*.key
 /vendor
 .env
