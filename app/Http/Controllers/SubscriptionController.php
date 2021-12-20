@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Stripe;
+use Illuminate\Support\Facades\Mail;
 
 class SubscriptionController extends Controller
 {
@@ -102,6 +103,7 @@ class SubscriptionController extends Controller
             'author' => Auth::id(),
             'event_id' => $id,
         ]);
+        $this->emailNotif($subscribe);
         return $subscribe;
     }
 
@@ -111,5 +113,20 @@ class SubscriptionController extends Controller
         }else{
             return ['fail' => 'Somrthing went wrong! Try again.'];
         }
+    }
+
+    public function emailNotif($sub){
+        if($sub->author != Auth::id() || !Event::find($sub->event_id)){
+            return null;
+        }
+        $data = array(
+            'event' => Event::find($sub->event_id),
+            'user' => Auth::user(),
+            'ticket' => $sub,
+        );
+        Mail::send('Emails.sub-notification',$data, function($message ) use($data) {
+            $message->to($data['user']->email, 'Subscription notification')->subject('Notification');
+            $message->from(env('MAIL_USERNAME'), env('APP_NAME'));
+        });
     }
 }

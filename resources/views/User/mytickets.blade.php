@@ -20,7 +20,7 @@
                     <div class="row ml-2">
                         <div>
                             <span><i class="fa fa-calendar"></i> {{date('D  d  M  Y ', $strtime)}}</span><br>
-                            <span><i class="fa fa-clock"></i> At: {{date('H:s', $strtime)}}</span>
+                            <span><i class="fa fa-clock"></i> At: {{date('H:i', $strtime)}}</span>
                         </div>
                     </div>
                     <div class="mt-3">
