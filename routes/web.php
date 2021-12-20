@@ -85,6 +85,7 @@ Route::group([
     'middleware' => 'AuthCheck',
 ], function () {
     Route::get('/events/{id}/subscribe', [SubscriptionController::class, 'EventSubscriptionView'])->name('events.sub.view');
+    Route::get('/events/{id}/subscribe/notification', [SubscriptionController::class, 'subscribe2notif'])->name('events.sub.notif');
     Route::post('/events/{id}/subscribe', [SubscriptionController::class, 'paySubscription'])->name('events.subscribe');
     Route::post('/events/{id}/free-subscribe', [SubscriptionController::class, 'freeSub'])->name('events.free.subscribe');
 });

@@ -69,9 +69,15 @@
                                         <a href="{{route('events.sub.view', $event->id)}}" class="btn btn-info"><i class="fas fa-plus-circle mr-2"></i>Subscribe to event</a>
                                     </div>
                                     @endif
-                                    <div class="col-sm-12 mt-2">
-                                        <button class="btn btn-secondary"><i class="far fa-flag mr-2"></i>Subscribe to notifications from author</button>
-                                    </div>
+                                    @if($notif_sub)
+                                        <div class="col-sm-12 mt-2">
+                                            <a class="btn btn-outline-secondary" href="{{route('events.sub.notif', $event->id)}}"><i class="fas fa-check mr-2"></i>Unubscribe to notifications</a>
+                                        </div> 
+                                    @else
+                                        <div class="col-sm-12 mt-2">
+                                            <a class="btn btn-secondary" href="{{route('events.sub.notif', $event->id)}}"><i class="far fa-flag mr-2"></i>Subscribe to notifications from author</a>
+                                        </div> 
+                                    @endif
                                 </div>
                             </div>
                         </div>

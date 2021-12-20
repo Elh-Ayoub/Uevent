@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\NotifSubscribe;
 use App\Models\PromoCode;
 use App\Models\Subscribe;
 use Illuminate\Http\Request;
@@ -128,5 +129,27 @@ class SubscriptionController extends Controller
             $message->to($data['user']->email, 'Subscription notification')->subject('Notification');
             $message->from(env('MAIL_USERNAME'), env('APP_NAME'));
         });
+    }
+
+    public function subscribe2notif($id){
+        if(!Event::find($id)){
+            return back()->with('fail', 'Event not found!');
+        }
+        $sub = NotifSubscribe::where('event_id', $id)->first();
+        if(!$sub){
+            $sub = NotifSubscribe::create([
+                'author' => Auth::id(),
+                'event_id' => $id,
+            ]);
+            if($sub){
+              return back()->with('success', 'Subscribed to notification successfully!');  
+            }else{
+                return back()->with('fail', 'Something went wrong!');
+            }
+        }else{
+            $sub->delete();
+            return back()->with('success', 'Unsubscribed to notification!');  
+        }
+        return back()->with('fail', 'Something went wrong!');
     }
 }

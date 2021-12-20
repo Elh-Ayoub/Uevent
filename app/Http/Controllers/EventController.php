@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Event;
+use App\Models\NotifSubscribe;
 use App\Models\PromoCode;
 use App\Models\Subscribe;
 use Illuminate\Http\Request;
@@ -128,6 +129,7 @@ class EventController extends Controller
             'event_subs' => Subscribe::where('event_id', $id)->get(),
             'comments' => Comment::where('event_id', $id)->get(),
             'similar_events' => Event::where('category', $event->category)->get()->random($rand),
+            'notif_sub' => NotifSubscribe::where('event_id', $id)->first(),
         ]);
     }
 
