@@ -34,8 +34,8 @@ $("#limited").change(function(){
 $("#add_promo_code").click(function(){
     let value = Math.random().toString(15).substring(4, 8) + Math.random().toString(15).substring(4, 8);
     $('#promo_code_container').append(
-        '<div class="d-flex">'+
-        '<input type="text" name="code[]" class="form-control col-5" value="' + value +'" readonly>'+
-        '<input type="number" id="percentage" min="1" max="100" placeholder="Percentage (%)" name="percentage[]" class="form-control container__input col-7" required>'+
+        '<div class="row justify-content-center mt-2">'+
+        '<input type="text" name="code[]" class="form-control col-md-5" value="' + value +'" readonly>'+
+        '<input type="number" id="percentage" min="1" max="100" placeholder="Percentage (%)" name="percentage[]" class="form-control container__input col-md-5" required>'+
         '<a class="btn btn-danger btn-sm d-flex align-items-center" onClick="$(this).parent().remove();"><i class="fas fa-trash"></i></a></div>')
 });

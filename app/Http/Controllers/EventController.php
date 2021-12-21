@@ -78,7 +78,7 @@ class EventController extends Controller
         ]);
         if($event){
             if($request->code){
-              $this->storePromoCode($request, $event->id);  
+              $this->storePromoCode($request, $event->id); 
             }
             return redirect('events/create')->with('success', 'Event craeted successfully!');
         }else{
@@ -136,24 +136,58 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Event  $event
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Event $event)
+    public function edit($id)
     {
-        //
+        $event = Event::find($id);
+        if(!$event){
+            return back()->with('fail', 'Event not found!');
+        }
+        return view('Events.edit', [
+            'event' => $event,
+            'promo_codes' => PromoCode::where('event_id', $id)->get(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event  $event
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => ['required', 'string', 'max:100'],
+            'ticket_price' => ['required'],
+            'poster' => 'image|mimes:jpg,png|max:20000|dimensions:min_width=350,min_height=280',
+            'location' =>['required'],
+            'begins_at' => ['required'],
+            'category' => ['required'],
+        ]);
+        $event = Event::find($id);
+        $poster = $event->poster;
+        if($request->file('poster')){
+
+            $poster = $this->uploadImage($request);
+        }
+        if(!$event){
+            return back()->with('fail', 'Event not found!');
+        }
+        if($validator->fails()){
+            return back()->with('fail-arr', json_decode($validator->errors()->toJson()));
+        }
+        $event->update(array_merge($request->all(), [
+            'poster' => $poster,
+            'begins_at' => date('Y-m-d H:i:s', strtotime($request->begins_at)),
+            'publish_at' => ($request->publish_at) ? date('Y-m-d H:i:s', strtotime($request->publish_at)) : (null),
+        ]));
+        PromoCode::where('event_id', $id)->delete();
+        $this->storePromoCode($request, $id); 
+        return back()->with('success', 'Event updated successfully!');
     }
 
     /**
