@@ -8,11 +8,15 @@ use App\Models\Event;
 use App\Models\NotifSubscribe;
 use App\Models\PromoCode;
 use App\Models\Subscribe;
+use App\Models\User;
+use App\Notifications\EventNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use File;
+use Illuminate\Support\Facades\Notification;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -129,7 +133,7 @@ class EventController extends Controller
             'event_subs' => Subscribe::where('event_id', $id)->get(),
             'comments' => Comment::where('event_id', $id)->get(),
             'similar_events' => Event::where('category', $event->category)->get()->random($rand),
-            'notif_sub' => NotifSubscribe::where('event_id', $id)->first(),
+            'notif_sub' => NotifSubscribe::where(['event_id' => $id, 'author' => Auth::id()])->first(),
         ]);
     }
 
@@ -188,6 +192,41 @@ class EventController extends Controller
         PromoCode::where('event_id', $id)->delete();
         $this->storePromoCode($request, $id); 
         return back()->with('success', 'Event updated successfully!');
+    }
+
+    public function NotifyVisitors(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'content' => ['required', 'string', 'max:500'],
+        ]);
+        $event = Event::find($id);
+        if(!$event){
+            return back()->with('fail', 'Event not found!');
+        }
+        if($validator->fails()){
+            return back()->with('fail-arr', json_decode($validator->errors()->toJson()));
+        }
+        $data = [
+            'body' => $request->content,
+            'action' => 'Event details',
+            'url' => route('event.details', $id),
+        ];
+        $ids = array();
+        foreach(NotifSubscribe::where('event_id', $id)->get() as $subs){
+            array_push($ids, $subs->author);
+        }
+        $subscribers = User::find($ids);
+        Notification::send($subscribers, new EventNotification($data));
+        foreach($ids as $user){
+            DB::table('notifications')->insert([
+                'author' => Auth::id(),
+                'event_id' => $id,
+                'data' => $data['body'],
+                'send_to' => $user,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+        
+        return back()->with('success','Notification sent successfull!');
     }
 
     /**

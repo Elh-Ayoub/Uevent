@@ -135,7 +135,7 @@ class SubscriptionController extends Controller
         if(!Event::find($id)){
             return back()->with('fail', 'Event not found!');
         }
-        $sub = NotifSubscribe::where('event_id', $id)->first();
+        $sub = NotifSubscribe::where(['event_id' => $id, 'author' => Auth::id()])->first();
         if(!$sub){
             $sub = NotifSubscribe::create([
                 'author' => Auth::id(),

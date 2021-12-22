@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/account.css')}}">
   <link rel="stylesheet" href="{{asset('css/ticket.css')}}">
+  <link rel="stylesheet" href="{{ asset('css/createEvent.css') }}">
   <style>.selectfile{border: 1px #2d3748 solid; border-radius: 10px; padding: 5px 10px; margin: auto 10px; cursor: pointer; color: #2d3748;}</style>
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo.png')}}"/>
 </head>
@@ -67,6 +68,9 @@
                                         {{-- include users tickets view --}}
                                         @include('User.mytickets')
                                     </div>
+                                    <div class="tab-pane fade" id="account-notification">
+                                        @include('User.mynotifs')
+                                    </div>
                                     <div class="tab-pane fade" id="account-profile">
                                         @include('User.profile')
                                     </div>
@@ -77,8 +81,8 @@
                 </div>
             </div>
         </section>
-        @include('layouts.footer')
     </div>
+    @include('layouts.footer')
 </div>
 <!-- jQuery -->
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>

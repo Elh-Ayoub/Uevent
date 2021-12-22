@@ -78,6 +78,7 @@ Route::group([
     Route::post('/events/create', [EventController::class, 'store'])->name('events.store');
     Route::get('/events/{id}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::patch('/events/{id}/edit', [EventController::class, 'update'])->name('events.update');
+    Route::post('/events/{id}/notify', [EventController::class, 'NotifyVisitors'])->name('events.notification');
 });
 
 Route::get('/events/{id}', [EventController::class, 'show'])->name('event.details');

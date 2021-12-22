@@ -13,12 +13,34 @@
                       <h4 class="ml-3"><a href="{{route('event.details', $event->id)}}" class="myevent-link">{{$event->title}}</a></h4>  
                     </div>
                     <div class="small">
+                        <a href="#" class="link-muted mr-2" data-toggle="modal" data-target="#notify-{{$event->id}}">Notify visitors</a>
                         <a href="{{route('events.edit', $event->id)}}" class="link-muted">Edit</a>
-                        <a href="" class="link-muted ml-1">Delete</a>
+                        <a href="" class="link-muted ml-2">Delete</a>
                     </div>
                 </div>
             </div>
         </li>
+        <div id="notify-{{$event->id}}" class="modal fade">
+            <form action="{{route('events.notification', $event->id)}}" method="POST" class="modal-dialog">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header bg-gradient-info">
+                        <h5 class="modal-title">Send notification to "{{$event->title}}" visitors</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body row justify-content-center">
+                        <div class="form-group input-container col-12">
+                            <input type="text" id="title" placeholder="Notification content" name="content" class="form-control container__input" required>
+                            <label class="container__label" for="title">Notification content</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-info">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     @endforeach
 </ul>
 @endif

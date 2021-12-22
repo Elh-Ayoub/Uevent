@@ -51,6 +51,35 @@
                     </a>
                 </div>
             </li>
+            <li class="nav-item dropdown">
+                @php
+                    $notifications = DB::table('notifications')->where('send_to', Auth::id())->get()
+                @endphp
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-info navbar-badge">{{count($notifications)}}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-xl dropdown-menu-right">
+                    @foreach ($notifications as $notif)
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item col-12 overflow-hidden">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span>{{$notif->data}}</span>
+                            @php
+                                $today = new DateTime('now');
+                                $created_at =  new DateTime($notif->created_at);
+                                $interval = date_diff($today, $created_at);
+                                $res  = ($interval->format('%a') == '0') ? ('') : ($interval->format('%a days'));
+                                $res .= ($interval->format('%h') == '0') ? ('') : ($interval->format('%h hours'));
+                                $res .= ($interval->format('%i') == '0') ? ('') : ($interval->format('%i min'));
+                            @endphp
+                            <span class="float-right text-muted text-sm">{{$res}} ago</span>
+                        </a> 
+                    @endforeach
+                    <div class="dropdown-divider"></div>
+                    <a href="{{route('user.account')}}" class="dropdown-item dropdown-footer">See All Notifications</a>
+                </div>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{route('auth.logout')}}">Log out</a>
             </li>
