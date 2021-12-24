@@ -17,6 +17,7 @@ use File;
 use Illuminate\Support\Facades\Notification;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class EventController extends Controller
 {
@@ -235,8 +236,43 @@ class EventController extends Controller
      * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'password' => ['required', 'string'],
+        ]);
+        $event = Event::find($id);
+        if(!$event){
+            return back()->with('fail', 'Event not found!');
+        }
+        if($validator->fails()){
+            return back()->with('fail-arr', json_decode($validator->errors()->toJson()));
+        }
+        if((Auth::id() == $event->author) && Hash::check($request->password, Auth::user()->password)){
+            $data = [
+                'body' => 'An event you are subscribed in ('. $event->title .') has been removed!',
+                'action' => 'Check more events',
+                'url' => route('dashboard'),
+            ];
+            $ids = array();
+            foreach(NotifSubscribe::where('event_id', $id)->get() as $sub){
+                array_push($ids, $sub->author);
+            }
+            $subscribers = User::find($ids);
+            Notification::send($subscribers, new EventNotification($data));
+            foreach($ids as $user){
+                DB::table('notifications')->insert([
+                    'author' => Auth::id(),
+                    'event_id' => $id,
+                    'data' => $data['body'],
+                    'send_to' => $user,
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+            }
+            $event->delete();
+            return back()->with('success', 'Event deleted successfully!');
+        }else{
+            return back()->with('fail', 'Password incorrect!');
+        }
     }
 }
