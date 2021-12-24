@@ -129,7 +129,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group input-container mt-4" id="publish_at_container" style="display: none">
-                                    <label for="publish_at" class="col-sm-8 sample_label">Select date and time to publish: </label>
+                                    <label for="publish_at" class="col-sm-8 sample_label">Select date and time to publish (GMT): </label>
                                     <input type="datetime-local" name="publish_at" id="publish_at" class="form-control">
                                 </div>
                                 <div class="form-group input-container mt-4">

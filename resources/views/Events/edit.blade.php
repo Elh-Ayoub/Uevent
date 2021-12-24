@@ -80,8 +80,8 @@
                                 <div class="card-body">
                                     <label for="publish_at" class="col-sm-4 sample_label">Publish at: </label>
                                     <div class="form-group input-container mt-4" id="publish_at_container">
-                                        <label for="publish_at" class="col-sm-8 sample_label">Select date and time to publish: </label>
-                                        <input type="datetime-local" name="publish_at" id="publish_at" class="form-control">
+                                        <label for="publish_at" class="col-sm-8 sample_label">Select date and time to publish (GMT): </label>
+                                        <input type="datetime-local" name="publish_at" id="publish_at" class="form-control" value="{{date('Y-m-d\TH:i:s', strtotime($event->publish_at))}}">
                                     </div>
                                 </div>
                             </div>
