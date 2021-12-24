@@ -51,7 +51,7 @@ class EventController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => ['required', 'string', 'max:100'],
             'ticket_price' => ['required'],
-            'poster' => 'required|image|mimes:jpg,png|max:20000|dimensions:min_width=350,min_height=280',
+            'poster' => 'image|mimes:jpg,png|max:20000|dimensions:min_width=350,min_height=280',
             'location' =>['required'],
             'begins_at' => ['required'],
             'category' => ['required'],
@@ -71,7 +71,7 @@ class EventController extends Controller
             'tickets_limited' => $request->tickets_limited,
             'tickets_number' => $request->tickets_number,
             'ticket_price' => $request->ticket_price,
-            'poster' => $this->uploadImage($request),
+            'poster' => ($request->file('poster')) ? $this->uploadImage($request) : (asset('images/default-poster.png')),
             'receive_notif' => $request->receive_notif,
             'published' => $published,
             'can_see_visitors' => $request->can_see_visitors,
@@ -103,7 +103,7 @@ class EventController extends Controller
     }
 
     function storePromoCode($request, $id){
-        if(count($request->code) > 0){
+        if($request->code && count($request->code) > 0){
             for($i=0; $i < count($request->code); $i++){
                 PromoCode::create([
                     'author' => Auth::id(),
