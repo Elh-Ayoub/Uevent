@@ -1,0 +1,121 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    background: #16899b63;
+}
+.get-Started{
+    border: 2px solid;
+}
+
+.sign-in{
+    display: inline-block;
+    position: relative;
+}
+  
+.sign-in:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    transform-origin: bottom right;
+    transition: transform 0.5s ease-out;
+}
+  
+.sign-in:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+.floating-btn{
+    background-color: transparent;
+    animation: float 3s ease-in-out infinite;
+}
+
+.container__diagonal {
+    left: 0px;
+    position: absolute;
+    margin-top: 10px;
+    height: 80%;
+    width: 100%;
+    transform: skewY(-5deg);
+    background-color: #cff6fc98;
+    z-index: -2;
+}
+
+.text-in-diagonal{
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    transform: translateY(-50%);
+    transform: skewY(5deg);
+    color: #16899b;
+}
+
+/*  */
+.title-1 {
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+}
+  
+.title-1:first-of-type { 
+    animation: showup 7s infinite;
+}
+  
+.title-1:last-of-type {
+    width:0px;
+    animation: reveal 7s infinite;
+}
+  
+.title-1:last-of-type span {
+    margin-left:-355px;
+    animation: slidein 7s infinite;
+}
+
+.landing-footer{
+    position: absolute;
+    top: 100%;
+    bottom: 0%;
+    z-index: -1;
+}
+  
+@keyframes showup {
+    0% {opacity:0;}
+    20% {opacity:1;}
+    80% {opacity:1;}
+    100% {opacity:0;}
+}
+  
+@keyframes slidein {
+    0% { margin-left:-800px; }
+    20% { margin-left:-800px; }
+    35% { margin-left:0px; }
+    100% { margin-left:0px; }
+}
+  
+@keyframes reveal {
+    0% {opacity:0;width:0px;}
+    20% {opacity:1;width:0px;}
+    30% {width:355px;}
+    80% {opacity:1;}
+    100% {opacity:0;width:355px;}
+}
+/*  */
+
+@keyframes float {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+	50% {
+		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		transform: translatey(-10px);
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+}
