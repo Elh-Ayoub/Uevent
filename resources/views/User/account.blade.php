@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="{{asset('css/account.css')}}">
   <link rel="stylesheet" href="{{asset('css/ticket.css')}}">
   <link rel="stylesheet" href="{{ asset('css/createEvent.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/company.css') }}">
   <style>.selectfile{border: 1px #2d3748 solid; border-radius: 10px; padding: 5px 10px; margin: auto 10px; cursor: pointer; color: #2d3748;}</style>
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/logo.png')}}"/>
 </head>
@@ -47,6 +48,7 @@
                             <li class="nav-item"><a href="#account-panel" class="nav-link text-md active show" data-toggle="tab">Panel</a></li>
                             <li class="nav-item"><a href="#account-events" class="nav-link text-md" data-toggle="tab">My events</a></li>
                             <li class="nav-item"><a href="#account-tickets" class="nav-link text-md" data-toggle="tab">My tickets</a></li>
+                            <li class="nav-item"><a href="#user-company" class="nav-link text-md" data-toggle="tab">Company</a></li>
                             <li class="nav-item"><a href="#account-notification" class="nav-link text-md" data-toggle="tab">Notifications</a></li>
                             <li class="nav-item"><a href="#account-profile" class="nav-link text-md" data-toggle="tab">Profile</a></li>
                         </ul>
@@ -67,6 +69,9 @@
                                     <div class="tab-pane fade" id="account-tickets">
                                         {{-- include users tickets view --}}
                                         @include('User.mytickets')
+                                    </div>
+                                    <div class="tab-pane fade" id="user-company">
+                                        @include('User.company')
                                     </div>
                                     <div class="tab-pane fade" id="account-notification">
                                         @include('User.mynotifs')
@@ -98,6 +103,7 @@
 <script src="{{ asset('plugins/flot/plugins/jquery.flot.pie.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('js/panel.js') }}"></script>
+<script src="{{ asset('js/company.js') }}"></script>
 <script>
     function readImage(input) {
       if (input.files && input.files[0]) {

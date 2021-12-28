@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UserController;
@@ -110,4 +111,6 @@ Route::group([
     Route::patch('avatar/update', [UserController::class, 'UpdateAvatar'])->name('user.avatar.update');
     Route::delete('avatar/delete', [UserController::class, 'setDefaultAvatar'])->name('user.avatar.delete');    
     Route::delete('user/delete', [UserController::class, 'destroyAuthUser'])->name('user.delete');
+    //--Company entity--
+    Route::post('/users/company', [CompanyController::class, 'store'])->name('company.create');
 });
