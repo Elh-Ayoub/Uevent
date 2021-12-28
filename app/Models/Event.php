@@ -24,6 +24,7 @@ class Event extends Model
         'published',
         'location',
         'category',
+        'behalf_of_company',
     ];
 
 }

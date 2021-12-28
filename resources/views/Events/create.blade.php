@@ -48,6 +48,22 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @php
+                            $company = App\MOdels\Company::find(Auth::user()->company_id);
+                        @endphp
+                        @if($company)
+                            <div class="form-group col-12 p-0 mt-3">
+                                <select name="behalf_of_company" class="form-control container__input col-12 ">
+                                    <option selected disabled class="text-muted">Author</option>
+                                    <option value="no" class="test">
+                                        {{Auth::user()->username}}
+                                    </option>
+                                    <option value="yes" class="test">
+                                        {{$company->name}}
+                                    </option>
+                                </select>
+                            </div>
+                        @endif
                         <div class="form-group input-container">
                             <input type="text" id="title" placeholder="Event title" name="title" class="form-control container__input" required>
                             <label class="container__label" for="title">Event title</label>

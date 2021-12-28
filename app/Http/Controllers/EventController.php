@@ -56,6 +56,7 @@ class EventController extends Controller
             'location' =>['required'],
             'begins_at' => ['required'],
             'category' => ['required'],
+            'behalf_of_company' => ['required'],
         ]);
         if($validator->fails()){
             return back()->with('fail-arr', json_decode($validator->errors()->toJson()));
@@ -80,6 +81,7 @@ class EventController extends Controller
             'begins_at' => date('Y-m-d H:i:s', strtotime($request->begins_at)),
             'location' => $request->location,
             'category' => $request->category,
+            'behalf_of_company' => $request->behalf_of_company,
         ]);
         if($event){
             if($request->code){

@@ -19,6 +19,7 @@ class CreateEventsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('author');
             $table->enum('tickets_limited', ['yes', 'no']);
+            $table->enum('behalf_of_company', ['yes', 'no']);
             $table->integer('tickets_number')->nullable();
             $table->integer('ticket_price');
             $table->integer('category');

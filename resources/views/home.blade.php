@@ -55,8 +55,12 @@
                                     <a href="{{route('event.details', $event->id)}}" class="read-more">read more</a>
                                 </div>
                                 <div class="card-footer">
+                                    @php
+                                        $author = App\Models\User::find($event->author);
+                                        $company = App\Models\Company::find($author->company_id);
+                                    @endphp
                                     <ul>
-                                        <li><a href="#!"><i class="fas fa-user"></i>{{App\Models\User::find($event->author)->username}}</a></li>
+                                        <li><a href="#!"><i class="fas fa-user"></i>@if($event->behalf_of_company == "yes" && $company){{$company->name}} @else {{$author->username}} @endif</a></li>
                                         <li><a href="#!"><i class="far fa-comment-dots"></i><span>{{count(App\Models\Comment::where('event_id', $event->id)->get())}}</span></a></li>
                                     </ul>
                                 </div>

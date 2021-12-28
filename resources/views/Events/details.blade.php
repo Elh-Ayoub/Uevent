@@ -144,8 +144,19 @@
                                 </div>
                                 </div>
                                 <hr>
-                                <img src="{{App\Models\User::find($event->author)->profile_photo}}" class="img-fluid img-circle" alt="User-Image" style="border: 1px solid grey;">
-                                <span class="ml-2 text-lg">{{App\Models\User::find($event->author)->username}}</span>
+                                <div class="row align-items-center">
+                                    @php
+                                        $author = App\Models\User::find($event->author);
+                                        $company = App\Models\Company::find($author->company_id);
+                                    @endphp
+                                    @if($event->behalf_of_company == "yes" && $company)
+                                        <img src="{{$company->logo}}" class="img-fluid img-circle img-md" alt="User-Image" style="border: 1px solid grey;">
+                                        <span class="ml-2 text-lg">{{$company->name}}</span>
+                                    @else
+                                        <img src="{{$author->profile_photo}}" class="img-fluid img-circle" alt="User-Image" style="border: 1px solid grey;">
+                                        <span class="ml-2 text-lg">{{$author->username}}</span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="card mb-3">
