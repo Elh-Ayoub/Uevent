@@ -35,14 +35,18 @@
     </form>
 </div>
 @else
-<div class="content">
+<div class="content row">
     <div class="card company-card">
-        <div class="firstinfo">
+        <div class="firstinfo row align-items-lg-start">
             <img class="border" src="{{$company->logo}}"/>
             <div class="profileinfo">
                 <h1>{{$company->name}}</h1>
                 <h3>{{$company->email}}</h3>
                 <p class="bio">{{$company->location}}</p>
+            </div>
+            <div>
+                <a class="link-muted mr-1" data-toggle="modal" data-target="#edit-company"><i class="fas fa-pen"></i></a>
+                <a class="link-muted ml-1" data-toggle="modal" data-target="#delete-company"><i class="fas fa-times"></i></a>
             </div>
         </div>
     </div>

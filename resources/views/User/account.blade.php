@@ -103,7 +103,6 @@
 <script src="{{ asset('plugins/flot/plugins/jquery.flot.pie.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{ asset('js/panel.js') }}"></script>
-<script src="{{ asset('js/company.js') }}"></script>
 <script>
     function readImage(input) {
       if (input.files && input.files[0]) {
@@ -154,4 +153,9 @@
     @endforeach
 @endif
 </body>
+{{-- Include modal used --}}
+@include('Modals.events')
+@include('Modals.ticket')
+@include('Modals.company')
+<script src="{{ asset('js/company.js') }}"></script>
 </html>

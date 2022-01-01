@@ -22,9 +22,9 @@ h1 {
     margin-bottom: 30px
 }
 
-.row {
+/* .row {
     overflow: hidden
-}
+} */
 
 .card-ticket {
     display: table-row;
@@ -35,7 +35,6 @@ h1 {
     font-family: 'Oswald', sans-serif;
     text-transform: uppercase;
     border-radius: 4px;
-    position: relative
 }
 
 .date {
@@ -142,7 +141,7 @@ h1 {
     bottom: 10px
 }
 
-@media screen and (max-width: 860px) {
+/* @media screen and (max-width: 860px) {
     .card {
         display: block;
         float: none;
@@ -156,4 +155,4 @@ h1 {
     .card-cont .even-info {
         font-size: 75%
     }
-}
+} */

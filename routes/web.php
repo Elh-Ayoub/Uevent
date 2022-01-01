@@ -113,4 +113,6 @@ Route::group([
     Route::delete('user/delete', [UserController::class, 'destroyAuthUser'])->name('user.delete');
     //--Company entity--
     Route::post('/users/company', [CompanyController::class, 'store'])->name('company.create');
+    Route::patch('/users/company/{id}', [CompanyController::class, 'update'])->name('company.update');
+    Route::delete('/users/company/{id}', [CompanyController::class, 'destroy'])->name('company.delete');
 });
