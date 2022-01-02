@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 use Mail;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -115,4 +116,51 @@ class AuthController extends Controller
                     ? redirect()->route('login')->with('success', __($status))
                     : back()->with(['email' => [__($status)]]);
     }
+
+    public function redirectToGoogle(){
+        return Socialite::driver('google')->redirect();
+    }
+    public function hundelGoogleCallback(){
+        $user = Socialite::driver('google')->stateless()->user();
+        $dbuser = $this->registerOrLogin($user, 'Google+');
+        Auth::login($dbuser);
+        return redirect('/home');
+    }
+    public function redirectToFacebook(){
+        return Socialite::driver('facebook')->redirect();
+    }
+    public function hundelFacebookCallback(){
+        $user = Socialite::driver('facebook')->stateless()->user();
+        $this->registerOrLogin($user, 'Facebook');
+    }
+    public function redirectToGithub(){
+        return Socialite::driver('github')->redirect();
+    }
+    public function hundelGithubCallback(){
+        $user = Socialite::driver('github')->stateless()->user();
+        $dbuser = $this->registerOrLogin($user, 'Github');
+        Auth::login($dbuser);
+        return redirect('/home');
+    }
+    function registerOrLogin($data, $sm){
+        $user = User::where('email', $data->email)->first();
+        if(!$user){
+            if($data->nickname){
+                $username = $data->nickname;
+            }else{
+                $username = $data->name;
+            }
+            $user = User::create([
+                'username' => $username,
+                'password' => bcrypt(Str::random(8)),
+                'full_name' => $data->name,
+                'email' => $data->email,
+                'profile_photo' => $data->avatar,
+            ]);
+            //send email:
+            // $this->mailUser($user, $sm);
+        }
+        return $user;
+    }
+
 }

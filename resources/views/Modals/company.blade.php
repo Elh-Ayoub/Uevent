@@ -53,3 +53,24 @@
     </div>
 </div>
 @endif
+<div class="modal fade" id="modal-delete-user">
+    <div class="modal-dialog">
+        <form action="{{route('user.delete')}}" method="POST" class="modal-content bg-danger">
+            @csrf
+            @method('DELETE')
+            <div class="modal-header">
+                <h4 class="modal-title">Delete account</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You're about to delete your account, all your will be deleted as well. Are you sure ?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-outline-light">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>

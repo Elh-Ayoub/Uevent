@@ -42,6 +42,17 @@ Route::group([
     Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('auth/register', [AuthController::class, 'register'])->name('auth.register');
 });
+    // ----------Social media Authentication----------
+    //Google
+    Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('/auth/google/callback', [AuthController::class, 'hundelGoogleCallback']);
+    //Facebook
+    Route::get('/auth/facebook', [AuthController::class, 'redirectToFacebook'])->name('auth.facebook');
+    Route::get('/auth/facebook/callback', [AuthController::class, 'hundelFacebookCallback']);
+    //github
+    Route::get('/auth/github', [AuthController::class, 'redirectToGithub'])->name('auth.github');
+    Route::get('/auth/github/callback', [AuthController::class, 'hundelGithubCallback']);
+
 Route::group([
     'middleware' => 'web',
 ], function () {
