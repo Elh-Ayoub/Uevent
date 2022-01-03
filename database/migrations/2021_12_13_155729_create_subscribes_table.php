@@ -17,6 +17,7 @@ class CreateSubscribesTable extends Migration
             $table->id();
             $table->integer('author');
             $table->integer('event_id');
+            $table->text('qr_code')->nullable();
             $table->enum('show_name', ['yes', 'no'])->default('yes');
             $table->timestamps();
         });

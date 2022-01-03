@@ -153,7 +153,7 @@
                                         <img src="{{$company->logo}}" class="img-fluid img-circle img-md" alt="User-Image" style="border: 1px solid grey;">
                                         <span class="ml-2 text-lg">{{$company->name}}</span>
                                     @else
-                                        <img src="{{$author->profile_photo}}" class="img-fluid img-circle" alt="User-Image" style="border: 1px solid grey;">
+                                        <img src="{{$author->profile_photo}}" class="img-fluid img-circle img-md" alt="User-Image" style="border: 1px solid grey;">
                                         <span class="ml-2 text-lg">{{$author->username}}</span>
                                     @endif
                                 </div>

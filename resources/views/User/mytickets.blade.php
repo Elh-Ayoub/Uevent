@@ -8,28 +8,24 @@
             }
             $strtime = strtotime($event->begins_at);
         @endphp
-            <article class="card card-ticket  col-sm-5 mx-2">
-                <section class="date px-3">
+            <article class="card-ticket  col-sm-5 mx-2 mb-0">
+                <section class="date px-2">
                     <time>
                         <span>{{date('d', $strtime)}}</span><span>{{date('M', $strtime)}}</span>
                     </time>
                 </section>
-                <section class="card-cont">
+                <section class="card-cont col-12 pr-2">
                     <small>{{$event->id}} -- {{$ticket->id}}</small>
                     <h3>{{$event->title}}</h3>
-                    <div class="row ml-2">
-                        <div>
+                    <div class="row d-flex justify-content-between align-items-end">
+                        <div  class="col-md-8">
                             <span><i class="fa fa-calendar"></i> {{date('D  d  M  Y ', $strtime)}}</span><br>
-                            <span><i class="fa fa-clock"></i> At: {{date('H:i', $strtime)}}</span>
+                            <span><i class="fa fa-clock"></i> At: {{date('H:i', $strtime)}}</span><br>
+                            <span><i class="fa fa-map-marker"></i> {{$event->location}}</span>
                         </div>
+                        <img src="{{$ticket->qr_code}}" class="col-md-4" class="img-fluid img-md" alt="">
                     </div>
-                    <div class="mt-3">
-                        <p>
-                            <i class="fa fa-map-marker"></i>
-                            {{$event->location}}
-                        </p>
-                    </div>
-                    <a href="" data-toggle="modal" data-target="#preview-ticket-{{$ticket->id}}">Preview</a>
+                    <a href="" data-toggle="modal" class="fl-right mt-2 " data-target="#preview-ticket-{{$ticket->id}}">Preview</a>
                 </section>
             </article>
     @endforeach

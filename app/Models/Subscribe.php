@@ -12,7 +12,7 @@ class Subscribe extends Model
     protected $fillable = [
         'author',
         'event_id',
-        
+        'qr_code',
         'show_name',
     ];
 }

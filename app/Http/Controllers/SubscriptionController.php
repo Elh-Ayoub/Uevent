@@ -6,11 +6,14 @@ use App\Models\Event;
 use App\Models\NotifSubscribe;
 use App\Models\PromoCode;
 use App\Models\Subscribe;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Stripe;
+use File;
 use Illuminate\Support\Facades\Mail;
+use QrCode;
 
 class SubscriptionController extends Controller
 {
@@ -99,11 +102,32 @@ class SubscriptionController extends Controller
         return ['success' => 'updated successfully!'];
     }
 
+    public function invoice($id){
+        $ticket = Subscribe::find($id);
+        if(!$ticket){
+            return back()->with('fail', 'Ticket not found!');
+        }
+        return view('Events.ticket-invoice', [
+            'ticket' => $ticket, 
+            'author' => User::find($ticket->author),
+            'event' => Event::find($ticket->event_id),
+        ]);
+    }
+
     public function store($id){
         $subscribe = Subscribe::create([
             'author' => Auth::id(),
             'event_id' => $id,
         ]);
+        //create QR code
+        $path = public_path('/qr-codes');
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path, 0777, true, true);
+        }
+        \QrCode::size(500)
+            ->format('png')
+            ->generate(route('ticket.invoice', $subscribe->id), public_path('/qr-codes/ticket-' . $subscribe->id . '.png'));
+        $subscribe->update(['qr_code' => url('/qr-codes/ticket-' . $subscribe->id . '.png')]);
         $this->emailNotif($subscribe);
         return $subscribe;
     }
@@ -124,10 +148,12 @@ class SubscriptionController extends Controller
             'event' => Event::find($sub->event_id),
             'user' => Auth::user(),
             'ticket' => $sub,
+            'qr_code' => public_path(parse_url($sub->qr_code, PHP_URL_PATH)),
         );
-        Mail::send('Emails.sub-notification',$data, function($message ) use($data) {
+        Mail::send('Emails.sub-notification', $data, function($message ) use($data) {
             $message->to($data['user']->email, 'Subscription notification')->subject('Notification');
             $message->from(env('MAIL_USERNAME'), env('APP_NAME'));
+            $message->attach($data['qr_code']);
         });
     }
 

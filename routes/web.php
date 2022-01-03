@@ -105,6 +105,8 @@ Route::group([
     Route::get('/events/{id}/subscribe/notification', [SubscriptionController::class, 'subscribe2notif'])->name('events.sub.notif');
     Route::post('/events/{id}/subscribe', [SubscriptionController::class, 'paySubscription'])->name('events.subscribe');
     Route::post('/events/{id}/free-subscribe', [SubscriptionController::class, 'freeSub'])->name('events.free.subscribe');
+    //ticket invoice
+    Route::get('/ticket/{id}', [SubscriptionController::class, 'invoice'])->name('ticket.invoice');
 });
 
 ///////////////////// ---- Comments Module ---- /////////////////////////////////
