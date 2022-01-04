@@ -38,7 +38,7 @@ This is a web application that helps to Search or create events to unite like-mi
     <li><b>run: npm run dev</b></li>
     <li><b>run after creating database: php artisan migrate and php artisan db:seed</b></li>
     <li><b>set mailer settings in .env file</b></li>
-    <li><b>set Google, github client settings in .env file</b></li>
+    <li><b>set Stripe, Google, github client settings in .env file</b></li>
     <li><b>serve the project with: php artisan serve</b></li>
     <li><b>Run laravel scheduler: php artisan schedule:work</b></li>
 </ol>
