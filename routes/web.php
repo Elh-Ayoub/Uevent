@@ -129,3 +129,6 @@ Route::group([
     Route::patch('/users/company/{id}', [CompanyController::class, 'update'])->name('company.update');
     Route::delete('/users/company/{id}', [CompanyController::class, 'destroy'])->name('company.delete');
 });
+//--Contact us--
+Route::get('/Contact-us/', [UserController::class, 'contactUsView'])->name('contact.view');
+Route::post('/Contact-us/', [UserController::class, 'contactUs'])->name('contact.send');

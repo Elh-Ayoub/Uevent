@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -183,5 +184,30 @@ class UserController extends Controller
         Event::where('author', Auth::id())->delete();
         Auth::user()->delete();
         return redirect('auth/login')->with('success', 'Account deleted successfully!');
+    }
+
+    public function contactUsView(){
+        return view('contact-us');
+    }
+
+    public function contactUs(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string',
+            'subject' => 'required|string',
+            'message' => 'required|string',
+        ]);
+        if($validator->fails()){
+            return back()->with('fail-arr', json_decode($validator->errors()->toJson()));
+        }
+        $data = array('name'=> $request->name,
+          'email'=> $request->email,
+          'subject' => $request->subject,
+          'content' => $request->message,
+        ); 
+        Mail::send('Emails.contactMail',$data, function($message ) use($data) {
+           $message->to(env('MAIL_USERNAME'), 'Contact')->subject($data['subject']);
+           $message->from($data['email'], $data['name']);
+        });
+        return back()->with('success', 'Message sent successfully!');
     }
 }
